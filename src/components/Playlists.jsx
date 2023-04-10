@@ -52,7 +52,7 @@ const Container = styled.div`
     list-style-type: none;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1rem;  
     padding: 1rem;
     height: 55vh;
     max-height: 100%;

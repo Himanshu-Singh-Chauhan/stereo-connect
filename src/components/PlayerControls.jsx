@@ -10,12 +10,40 @@ import { FiRepeat } from "react-icons/fi";
 import { useStateProvider } from "../utils/StateProvider";
 import axios from "axios";
 import { reducerCases } from "../utils/Constants";
-export default function PlayerControls() {
-  const [{ token, playerState }, dispatch] = useStateProvider();
 
-  const changeState = async () => {
-    const state = playerState ? "pause" : "play";
-    console.log(token)
+import { useContext } from "react";
+import {SocketContext} from '../utils/socket';
+import { useEffect } from "react";
+
+
+
+export default function PlayerControls() {
+
+  
+  const socket = useContext(SocketContext);
+
+  useEffect(() => {
+    socket.on("statechange", (state) => {
+      console.log("somebody change state");
+      changeState(true);
+    })
+  }, [])
+
+  const [{ token, playerState }, dispatch] = useStateProvider();
+  
+  const changeState = async (isSyncing) => {
+    
+    let state = playerState ? "pause" : "play";
+    
+    console.log(state)
+    // console.log(token)
+
+    if (!isSyncing) {
+      console.log("socket - ", socket)
+      socket.emit("statechange", state)
+    }
+
+
     await axios.put(
       `https://api.spotify.com/v1/me/player/${state}`,
       {},
@@ -30,6 +58,8 @@ export default function PlayerControls() {
       type: reducerCases.SET_PLAYER_STATE,
       playerState: !playerState,
     });
+
+    
   };
   const changeTrack = async (type) => {
     await axios.post(
@@ -74,9 +104,9 @@ export default function PlayerControls() {
       </div>
       <div className="state">
         {playerState ? (
-          <BsFillPauseCircleFill onClick={changeState} />
+          <BsFillPauseCircleFill onClick={() => changeState(false)} />
         ) : (
-          <BsFillPlayCircleFill onClick={changeState} />
+          <BsFillPlayCircleFill onClick={() => changeState(false)} />
         )}
       </div>
       <div className="next">

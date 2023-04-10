@@ -1,11 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { MdHomeFilled, MdSearch } from "react-icons/md";
-import { IoLibrary } from "react-icons/io5";
-import Playlists from "./Playlists";
 export default function Sidebar() {
   return (
-    <Container>
+    <SidebarContainer>
       <div className="top__links">
         <div className="logo">
           {/* <img
@@ -16,25 +13,21 @@ export default function Sidebar() {
         </div>
         <ul>
           <li>
-            <MdHomeFilled />
             <span>Home</span>
           </li>
           <li>
-            <MdSearch />
-            <span>Search</span>
+            <span>Recommended Songs</span>
           </li>
           <li>
-            <IoLibrary />
-            <span>Your Library</span>
+            <span>Rooms</span>
           </li>
         </ul>
       </div>
-      <Playlists />
-    </Container>
+    </SidebarContainer>
   );
 }
 
-const Container = styled.div`
+const SidebarContainer = styled.div`
   background-color: black;
   color: #b3b3b3;
   display: flex;
