@@ -6,6 +6,7 @@ import Navbar from "./Navbar";
 import axios from "axios";
 import { useStateProvider } from "../utils/StateProvider";
 import Body from "./Body";
+import Recommended from "./Recommended";
 import { reducerCases } from "../utils/Constants";
 
 // import { io } from 'socket.io-client'
@@ -80,7 +81,10 @@ export default function Spotify() {
   if (pageToShow === "recom") {
     page = (
       <div className="body" ref={bodyRef} onScroll={bodyScrolled}>
-        Recommended songs here
+        <Navbar navBackground={navBackground} />
+        <div className="body__contents">
+          <Recommended headerBackground={headerBackground} />
+        </div>
       </div>
     );
   
